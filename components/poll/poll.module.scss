@@ -1,0 +1,73 @@
+@import "../../styles/variables.module.scss";
+
+.poll {
+	padding: 1rem;
+	background-color: $color-vivid-sky;
+	border-radius: 5px;
+	box-shadow: 0 0 0.55rem 0 rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+	height: fit-content;
+}
+
+.title {
+	color: $color-raisin-black;
+	margin-bottom: 1rem;
+}
+
+.title,
+.subTitle {
+	&::first-letter {
+		text-transform: uppercase;
+	}
+}
+
+.itemsList {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 0.75rem;
+}
+
+.subTitle {
+	margin-bottom: 0.7rem;
+	color: $color-raisin-black;
+}
+
+.option,
+.tag {
+	font-size: 1.55rem;
+	padding: 0.35rem 0.75rem;
+	border-radius: 5px;
+	color: $color-raisin-black;
+	margin-right: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.option {
+	background-color: $color-cultured;
+}
+
+.tag {
+	background-color: $color-raisin-black;
+	color: $color-cultured;
+}
+
+.controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 1.5rem;
+	flex-wrap: wrap;
+
+	& > *:first-child {
+		margin-right: 0.75rem;
+	}
+
+	& > * {
+		flex: 1;
+	}
+}
+
+.private {
+	background-color: $color-green-yellow;
+}

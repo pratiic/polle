@@ -1,0 +1,55 @@
+@import "../../styles/variables.module.scss";
+
+.button {
+	background-color: $color-raisin-black;
+	outline: none;
+	color: $color-cultured;
+	padding: 0.35rem 0.75rem;
+	font-size: 1.75rem;
+	border-radius: 5px;
+	cursor: pointer;
+	border: 1px solid $color-raisin-black;
+
+	&:hover {
+		color: $color-cultured;
+	}
+
+	&:active {
+		color: $color-vivid-sky;
+	}
+}
+
+.outlined {
+	background-color: transparent;
+	color: $color-raisin-black;
+
+	&:hover {
+		background-color: $color-raisin-black;
+	}
+}
+
+.red {
+	background-color: $color-bitter-sweet;
+	border: 1px solid $color-bitter-sweet;
+
+	&.outlined {
+		background-color: transparent;
+		color: $color-bitter-sweet;
+		border: 1px solid $color-bitter-sweet;
+	}
+
+	&:hover {
+		background-color: $color-bitter-sweet;
+		color: $color-cultured;
+	}
+
+	&:active {
+		color: $color-vivid-sky;
+	}
+}
+
+.blue {
+	background-color: $color-vivid-sky;
+	border: 1px solid $color-vivid-sky;
+	color: $color-raisin-black;
+}
