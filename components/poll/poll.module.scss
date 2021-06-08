@@ -2,7 +2,7 @@
 
 .poll {
 	padding: 1rem;
-	background-color: $color-vivid-sky;
+	background-color: $color-two;
 	border-radius: 5px;
 	box-shadow: 0 0 0.55rem 0 rgba(0, 0, 0, 0.5);
 	cursor: pointer;
@@ -10,8 +10,9 @@
 }
 
 .title {
-	color: $color-raisin-black;
+	color: $color-five;
 	margin-bottom: 1rem;
+	text-align: center;
 }
 
 .title,
@@ -30,26 +31,18 @@
 
 .subTitle {
 	margin-bottom: 0.7rem;
-	color: $color-raisin-black;
+	color: $color-five;
 }
 
 .option,
 .tag {
+	background-color: $color-three;
 	font-size: 1.55rem;
 	padding: 0.35rem 0.75rem;
 	border-radius: 5px;
-	color: $color-raisin-black;
+	color: $color-five;
 	margin-right: 0.5rem;
 	margin-bottom: 0.75rem;
-}
-
-.option {
-	background-color: $color-cultured;
-}
-
-.tag {
-	background-color: $color-raisin-black;
-	color: $color-cultured;
 }
 
 .controls {
@@ -69,5 +62,15 @@
 }
 
 .private {
-	background-color: $color-green-yellow;
+	background-color: lighten($color-five, 15%);
+
+	.title,
+	.subTitle {
+		color: $color-three;
+	}
+
+	.option,
+	.tag {
+		background-color: $color-four;
+	}
 }

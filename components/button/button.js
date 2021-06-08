@@ -1,6 +1,6 @@
 import styles from "./button.module.scss";
 
-const Button = ({ type, children, clickHandler, color }) => {
+const Button = ({ type, children, clickHandler, color, size }) => {
 	return (
 		<button
 			type={type}
@@ -8,7 +8,7 @@ const Button = ({ type, children, clickHandler, color }) => {
 				type === "outlined" && styles.outlined
 			} ${color === "red" && styles.red} ${
 				color === "blue" && styles.blue
-			}`}
+			} ${size === "full" && styles.full}`}
 			onClick={clickHandler}
 		>
 			{children}

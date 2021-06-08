@@ -11,21 +11,28 @@
 }
 
 .link {
-	color: $color-vivid-sky;
+	color: $color-five;
 	font-size: 1.8rem;
 	cursor: pointer;
 	padding: 0.5rem 0.75rem;
 	display: block;
-
-	&:hover {
-		color: $color-green-yellow;
-	}
-
-	&:active {
-		color: $color-cultured;
-	}
+	font-weight: 500;
+	position: relative;
 
 	&::first-letter {
 		text-transform: uppercase;
+	}
+}
+
+.active {
+	&::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		bottom: 0;
+		transform: translateX(-50%);
+		background-color: $color-five;
+		width: 75%;
+		height: 2px;
 	}
 }

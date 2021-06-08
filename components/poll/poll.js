@@ -2,7 +2,7 @@ import styles from "./poll.module.scss";
 
 import Button from "../button/button";
 
-const Poll = ({ title, id, options, tags, type }) => {
+const Poll = ({ title, id, options, tags, type, createdBy, createdAt }) => {
 	return (
 		<div
 			className={`${styles.poll} ${type === "private" && styles.private}`}
@@ -31,11 +31,17 @@ const Poll = ({ title, id, options, tags, type }) => {
 				})}
 			</ul>
 
-			<h5 className={styles.subTitle}>poll type is {type}</h5>
+			<h5 className={styles.subTitle}>
+				poll type is {type}. Created by {createdBy} 1h ago
+			</h5>
 
 			<div className={styles.controls}>
-				<Button type="outlined">view details</Button>
-				<Button color="red">cancel poll</Button>
+				<Button type={type === "private" && "outlined"}>
+					view details
+				</Button>
+				<Button color="red" type={type !== "private" && "outlined"}>
+					cancel poll
+				</Button>
 			</div>
 		</div>
 	);

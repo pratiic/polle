@@ -1,10 +1,28 @@
 @import "../styles/variables.module.scss";
 
-.title {
-	color: $color-raisin-black;
-	margin-bottom: 1.5rem;
+.title,
+.subTitle {
+	color: $color-five;
+	font-weight: 500;
 
 	&::first-letter {
 		text-transform: uppercase;
 	}
+}
+
+.titleCenter {
+	text-align: center;
+}
+
+.form {
+	width: 30rem;
+	margin: auto;
+}
+
+.formLink {
+	color: $color-two;
+}
+
+.page {
+	margin-top: 1.5rem;
 }
