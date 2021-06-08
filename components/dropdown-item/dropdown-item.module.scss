@@ -1,0 +1,15 @@
+@import "../../styles/variables.module.scss";
+
+.dropdownItem {
+	font-size: 1.55rem;
+	color: $color-five;
+	background-color: transparent;
+	padding: 0.25rem 1.5rem;
+	cursor: pointer;
+	white-space: nowrap;
+
+	&:hover {
+		background-color: $color-one;
+		color: $color-three;
+	}
+}

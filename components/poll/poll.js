@@ -35,14 +35,18 @@ const Poll = ({ title, id, options, tags, type, createdBy, createdAt }) => {
 				poll type is {type}. Created by {createdBy} 1h ago
 			</h5>
 
-			<div className={styles.controls}>
+			{/* <div className={styles.controls}>
 				<Button type={type === "private" && "outlined"}>
 					view details
 				</Button>
 				<Button color="red" type={type !== "private" && "outlined"}>
 					cancel poll
 				</Button>
-			</div>
+			</div> */}
+			<div className={styles.gap}></div>
+			<Button type={type === "private" && "outlined"} align="center">
+				view details
+			</Button>
 		</div>
 	);
 };

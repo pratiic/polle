@@ -1,0 +1,20 @@
+@import "../../styles/variables.module.scss";
+
+.profilePreview {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.username {
+	color: $color-five;
+	margin-right: 0.75rem;
+	cursor: pointer;
+}
+
+.dropdownMenu {
+	position: absolute;
+	bottom: -3.5rem;
+	right: 0;
+}

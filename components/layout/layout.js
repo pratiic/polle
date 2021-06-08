@@ -1,8 +1,39 @@
+import { useEffect } from "react";
+import { useDispatch, connect } from "react-redux";
+import { useRouter } from "next/router";
+
 import styles from "../../styles/layout.module.scss";
+
+import { setCurrentUser } from "../../redux/current-user/current-user.actions";
+
+import { auth, getCurrentUser } from "../../firebase/firebase.utils";
 
 import Header from "../header/header";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, currentUser }) => {
+	const dispatch = useDispatch();
+
+	const router = useRouter();
+
+	useEffect(() => {
+		if (currentUser) {
+			router.push("/");
+		} else {
+			router.push("/signin");
+		}
+	}, [currentUser]);
+
+	useEffect(() => {
+		auth.onAuthStateChanged(async (user) => {
+			if (user) {
+				const currentUser = await getCurrentUser(user.uid);
+				dispatch(setCurrentUser(currentUser));
+			} else {
+				dispatch(setCurrentUser(null));
+			}
+		});
+	}, []);
+
 	return (
 		<div>
 			<Header />
@@ -11,4 +42,10 @@ const Layout = ({ children }) => {
 	);
 };
 
-export default Layout;
+const mapStateToProps = (state) => {
+	return {
+		currentUser: state.currentUser.currentUser,
+	};
+};
+
+export default connect(mapStateToProps)(Layout);

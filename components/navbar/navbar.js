@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { connect } from "react-redux";
+
+import { auth } from "../../firebase/firebase.utils";
 
 import styles from "./navbar.module.scss";
 
-const Navbar = () => {
+import Button from "../button/button";
+import ProfilePreview from "../profile-preview/profile-preview";
+
+const Navbar = ({ currentUser }) => {
 	const [navLinks, setNavLinks] = useState([
 		{
 			value: "my polls",
@@ -42,6 +48,10 @@ const Navbar = () => {
 		);
 	}, [pathname]);
 
+	const handleSignOutButtonClick = () => {
+		auth.signOut();
+	};
+
 	return (
 		<nav className={styles.navbar}>
 			{navLinks.map((navLink) => {
@@ -57,8 +67,16 @@ const Navbar = () => {
 					</Link>
 				);
 			})}
+
+			<ProfilePreview username={currentUser.username} />
 		</nav>
 	);
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+	return {
+		currentUser: state.currentUser.currentUser,
+	};
+};
+
+export default connect(mapStateToProps)(Navbar);

@@ -62,7 +62,7 @@
 }
 
 .private {
-	background-color: lighten($color-five, 15%);
+	background-color: $color-seven;
 
 	.title,
 	.subTitle {
@@ -73,4 +73,8 @@
 	.tag {
 		background-color: $color-four;
 	}
+}
+
+.gap {
+	margin-bottom: 2.5rem;
 }

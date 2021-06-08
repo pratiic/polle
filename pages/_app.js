@@ -1,8 +1,9 @@
-import { Provider } from "react-redux";
-import { store } from "../redux/store";
+import { Provider, useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 import "../styles/globals.scss";
 
+import { store } from "../redux/store";
 import Layout from "../components/layout/layout";
 
 function MyApp({ Component, pageProps }) {

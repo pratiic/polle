@@ -1,0 +1,21 @@
+@import "../../styles/variables.module.scss";
+
+.dropdownMenu {
+	background-color: $color-three;
+	border-radius: 5px;
+	display: none;
+
+	& > *:first-child {
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+	}
+
+	& > *:last-child {
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+	}
+}
+
+.show {
+	display: block;
+}
