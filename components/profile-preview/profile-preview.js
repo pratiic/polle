@@ -23,7 +23,7 @@ const ProfilePreview = ({ username }) => {
 	return (
 		<div className={styles.profilePreview} onClick={toggleDropdownMenu}>
 			<p className={styles.username}>{username}</p>
-			<ChevronDownIcon />
+			<ChevronDownIcon extraStyles={styles.icon} />
 			<DropdownMenu
 				extraStyles={styles.dropdownMenu}
 				show={showDropdownMenu}

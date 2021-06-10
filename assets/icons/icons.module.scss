@@ -4,20 +4,9 @@
 	width: 2rem;
 	height: 2rem;
 	cursor: pointer;
+}
 
-	path {
-		fill: $color-five;
-	}
-
-	&:hover {
-		path {
-			fill: $color-one;
-		}
-	}
-
-	&:active {
-		path {
-			fill: $color-five;
-		}
-	}
+.smaller {
+	width: 1.7rem;
+	height: 1.7rem;
 }

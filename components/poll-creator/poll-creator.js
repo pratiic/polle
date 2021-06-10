@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 import styles from "./poll-creator.module.scss";
 import genericStyles from "../../styles/generic.module.scss";
 import customInputStyles from "../custom-input/custom-input.module.scss";
+
+import { addCurrentUserPoll } from "../../redux/polls/polls.actions";
 
 import { createPoll } from "../../firebase/firebase.utils";
 
@@ -23,6 +25,7 @@ const PollCreator = ({ currentUser }) => {
 	const [timeDurationError, setTimeDurationError] = useState("");
 	const [dateDurationError, setDateDurationError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
+	const [creating, setCreating] = useState(false);
 
 	const titleRef = useRef();
 	const optionsRef = useRef();
@@ -47,6 +50,8 @@ const PollCreator = ({ currentUser }) => {
 	};
 
 	const router = useRouter();
+
+	const dispatch = useDispatch();
 
 	const renderOptions = () => {
 		let optionsArr = [];
@@ -124,48 +129,16 @@ const PollCreator = ({ currentUser }) => {
 
 		const emptyResult = validateInputFields();
 
-		try {
-			const currentTime = new Date().getTime();
-			const pollID = `${currentUser.userID}${currentTime}`;
+		setCreating(true);
 
-			const result = await createPoll({
-				title: titleRef.current.value,
-				options: [
-					{ value: option1Ref.current.value, votes: 0 },
-					{ value: option2Ref.current.value, votes: 0 },
-					option3Ref.current && option3Ref.current.value
-						? { value: option3Ref.current.value, votes: 0 }
-						: null,
-					option4Ref.current && option4Ref.current.value
-						? { value: option5Ref.current.value, votes: 0 }
-						: null,
-					option5Ref.current && option5Ref.current.value
-						? { value: option5Ref.current.value, votes: 0 }
-						: null,
-				],
-				durationType: durationRef.current.value,
-				timeDuration:
-					timeDurationRef.current && timeDurationRef.current.value
-						? timeDurationRef.current.value
-						: "",
-				dateDuration:
-					dateDurationRef.current && dateDurationRef.current.value
-						? dateDurationRef.current.value
-						: "",
-				type: typeRef.current.value,
-				password:
-					typeRef.current.value === "private" &&
-					passwordRef.current.value
-						? passwordRef.current.value
-						: "",
-				tags: tagsRef.current.value,
-				createdBy: currentUser,
-				createdAt: currentTime,
-				pollID: pollID,
-			});
+		try {
+			const result = await createPoll(getPoll());
+
+			setCreating(false);
 
 			if (result.message === "created") {
 				router.push("/");
+				dispatch(addCurrentUserPoll(getPoll()));
 			}
 		} catch (error) {
 			console.log(error);
@@ -242,6 +215,57 @@ const PollCreator = ({ currentUser }) => {
 		setOptionsErrors({ ...optionsErrors, [`${option}`]: error });
 	};
 
+	const getPoll = () => {
+		const currentTime = new Date().getTime();
+		const pollID = `${currentUser.userID}${currentTime}`;
+
+		let duration;
+
+		if (durationRef.current.value === "time") {
+			duration =
+				currentTime + timeDurationRef.current.value * 60 * 60 * 1000;
+		} else {
+			duration = new Date(dateDurationRef.current.value).getTime();
+		}
+
+		return {
+			title: titleRef.current.value,
+			options: [
+				{ value: option1Ref.current.value, votes: 0 },
+				{ value: option2Ref.current.value, votes: 0 },
+				option3Ref.current && option3Ref.current.value
+					? { value: option3Ref.current.value, votes: 0 }
+					: null,
+				option4Ref.current && option4Ref.current.value
+					? { value: option4Ref.current.value, votes: 0 }
+					: null,
+				option5Ref.current && option5Ref.current.value
+					? { value: option5Ref.current.value, votes: 0 }
+					: null,
+			],
+			// durationType: durationRef.current.value,
+			// timeDuration:
+			// 	timeDurationRef.current && timeDurationRef.current.value
+			// 		? timeDurationRef.current.value
+			// 		: "",
+			// dateDuration:
+			// 	dateDurationRef.current && dateDurationRef.current.value
+			// 		? dateDurationRef.current.value
+			// 		: "",
+			duration: duration,
+			type: typeRef.current.value,
+			password:
+				typeRef.current.value === "private" && passwordRef.current.value
+					? passwordRef.current.value
+					: "",
+			tags: tagsRef.current.value,
+			createdByID: currentUser.userID,
+			createdBy: currentUser,
+			createdAt: currentTime,
+			pollID: pollID,
+		};
+	};
+
 	return (
 		<form
 			className={`${genericStyles.form} ${styles.form}`}
@@ -290,7 +314,10 @@ const PollCreator = ({ currentUser }) => {
 			</select>
 			{renderType()}
 			<CustomInput label="tags" type="text" inputRef={tagsRef} />
-			<Button>create</Button>
+			<div className={styles.gap}></div>
+			<Button color="blue" size="full">
+				{creating ? "creating" : "create"}
+			</Button>
 		</form>
 	);
 };

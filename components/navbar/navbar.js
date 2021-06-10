@@ -19,6 +19,12 @@ const Navbar = ({ currentUser }) => {
 			path: "/",
 		},
 		{
+			value: "polls",
+			linkTo: "/polls",
+			active: false,
+			path: "/polls",
+		},
+		{
 			value: "search",
 			linkTo: "/search",
 			active: false,

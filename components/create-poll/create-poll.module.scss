@@ -1,13 +1,13 @@
 @import "../../styles/variables.module.scss";
 
-.profilePreview {
+.createPoll {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: relative;
+	cursor: pointer;
 
 	&:hover {
-		.username {
+		.text {
 			color: $color-one;
 		}
 
@@ -19,32 +19,26 @@
 	}
 
 	&:active {
-		.username {
-			color: $color-five;
+		.text {
+			color: $color-two;
 		}
 
 		.icon {
 			path {
-				fill: $color-five;
+				fill: $color-two;
 			}
 		}
 	}
 }
 
-.username {
-	color: $color-five;
+.text {
+	color: $color-two;
+	font-weight: 500;
 	margin-right: 0.75rem;
-	cursor: pointer;
-}
-
-.dropdownMenu {
-	position: absolute;
-	bottom: -3.5rem;
-	right: 0;
 }
 
 .icon {
 	path {
-		fill: $color-five;
+		fill: $color-two;
 	}
 }

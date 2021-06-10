@@ -31,26 +31,26 @@
 }
 
 .red {
-	background-color: $color-five;
-	border: 1px solid $color-five;
+	background-color: $color-seven;
+	border: 1px solid $color-seven;
 	color: $color-three;
 
 	&.outlined {
 		background-color: transparent;
 		color: $color-five;
-		border: 1px solid $color-five;
+		border: 1px solid $color-seven;
 
 		&:hover {
-			color: $color-three;
+			background-color: darken($color-seven, 5%);
 		}
 	}
 
 	&:hover {
-		background-color: darken($color-five, 5%);
+		background-color: darken($color-seven, 5%);
 	}
 
 	&:active {
-		background-color: darken($color-five, 12%);
+		background-color: darken($color-seven, 12%);
 	}
 }
 
@@ -76,4 +76,8 @@
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.fontSmaller {
+	font-size: 1.55rem;
 }

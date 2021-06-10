@@ -97,3 +97,63 @@ export const getCurrentUser = async (userID) => {
 		};
 	}
 };
+
+export const getUserPolls = async (userID) => {
+	try {
+		const pollsCollectionRef = await firestore
+			.collection("polls")
+			.orderBy("createdAt", "desc")
+			.where("createdByID", "==", userID)
+			.get();
+		const polls = pollsCollectionRef.docs;
+		return { polls };
+	} catch (error) {
+		return {
+			error: error,
+		};
+	}
+};
+
+export const getAllPolls = async () => {
+	try {
+		const pollsCollectionRef = await firestore
+			.collection("polls")
+			.orderBy("createdAt", "desc")
+			.get();
+		const polls = pollsCollectionRef.docs;
+		return { polls };
+	} catch (error) {
+		return {
+			error: error,
+		};
+	}
+};
+
+// export const getAllUsers = async () => {
+// 	try {
+// 		const usersCollectionRef = await firestore.collection("users").get();
+// 		const users = (users = usersCollectionRef.docs);
+// 		return { users };
+// 	} catch (error) {
+// 		return {
+// 			error: error,
+// 		};
+// 	}
+// };
+
+export const getPoll = async (pollID) => {
+	try {
+		const pollsCollectionRef = await firestore
+			.collection("polls")
+			.doc(pollID)
+			.get();
+		const poll = await pollsCollectionRef.data();
+		return {
+			poll,
+		};
+	} catch (error) {
+		return {
+			error: error,
+		};
+	}
+};

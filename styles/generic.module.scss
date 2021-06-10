@@ -24,5 +24,14 @@
 }
 
 .page {
-	margin-top: 1.5rem;
+	margin-top: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.message {
+	color: $color-five;
+
+	&::first-letter {
+		text-transform: uppercase;
+	}
 }
