@@ -88,6 +88,8 @@ const PollDetailsPage = ({ poll }) => {
 					}
 				}),
 				backgroundColor: chartColors,
+				pointBorderWidth: 3,
+				pointBorderColor: "rgb(50, 50, 44)",
 			},
 		];
 

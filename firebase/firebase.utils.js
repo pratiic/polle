@@ -245,3 +245,20 @@ export const checkIfVoted = async (pollID, currentUserID) => {
 		};
 	}
 };
+
+export const searchPolls = async (value) => {
+	try {
+		const [titleResults, tagsResults] = await Promise.all([
+			firestore
+				.collection("polls")
+				.where("tags", "array-contains", value)
+				.get(),
+			firestore.collection("polls").where("title", "==", value).get(),
+		]);
+		return { results: [...titleResults.docs, ...tagsResults.docs] };
+	} catch (error) {
+		return {
+			error: error,
+		};
+	}
+};

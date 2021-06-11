@@ -53,13 +53,11 @@ const Poll = ({
 	};
 
 	const renderTags = () => {
-		const tagsArr = arrayFromString();
-
-		return tagsArr ? (
+		return tags.length > 0 ? (
 			<React.Fragment>
 				<h5 className={styles.subTitle}>tags</h5>
 				<ul className={styles.itemsList}>
-					{tagsArr.map((tag) => {
+					{tags.map((tag) => {
 						return (
 							<li className={styles.tag} key={tag}>
 								{tag}
@@ -69,14 +67,6 @@ const Poll = ({
 				</ul>
 			</React.Fragment>
 		) : null;
-	};
-
-	const arrayFromString = () => {
-		if (tags.length > 0) {
-			return tags.split(",");
-		} else {
-			return null;
-		}
 	};
 
 	const getHowLongAgo = (milliseconds) => {

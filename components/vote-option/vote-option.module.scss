@@ -14,14 +14,22 @@
 	font-weight: 500;
 	display: block;
 	margin-bottom: 0.75rem;
-	max-width: 7rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: block;
+	max-width: 12rem;
 
 	&::first-letter {
 		text-transform: uppercase;
+	}
+
+	@media screen and (max-width: 1050px) {
+		max-width: 7rem;
+	}
+
+	@media screen and (max-width: 850px) {
+		max-width: 15rem;
 	}
 }
 

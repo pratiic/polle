@@ -1,0 +1,42 @@
+@import "../../styles/variables.module.scss";
+
+.search {
+}
+
+.inputGroup {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 3rem;
+	border: 1px solid $color-two;
+	border-radius: 5px;
+	width: 25rem;
+	padding: 0 0.75rem;
+}
+
+.input {
+	font-size: 1.55rem;
+	outline: none;
+	border: none;
+	font-family: inherit;
+	width: 100%;
+	margin-right: 0.5rem;
+}
+
+.icon {
+	path {
+		fill: $color-two;
+	}
+
+	&:hover {
+		path {
+			fill: $color-one;
+		}
+	}
+
+	&:active {
+		path {
+			fill: $color-two;
+		}
+	}
+}

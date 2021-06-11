@@ -19,23 +19,23 @@ const Navbar = ({ currentUser }) => {
 			path: "/",
 		},
 		{
-			value: "polls",
-			linkTo: "/polls",
-			active: false,
-			path: "/polls",
-		},
-		{
-			value: "search",
-			linkTo: "/search",
-			active: false,
-			path: "/search",
-		},
-		{
 			value: "create",
 			linkTo: "/create",
 			active: false,
 			path: "/create",
 		},
+		{
+			value: "polls",
+			linkTo: "/polls",
+			active: false,
+			path: "/polls",
+		},
+		// {
+		// 	value: "search",
+		// 	linkTo: "/search",
+		// 	active: false,
+		// 	path: "/search",
+		// },
 	]);
 
 	const { pathname } = useRouter();

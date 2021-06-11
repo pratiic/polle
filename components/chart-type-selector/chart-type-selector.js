@@ -23,7 +23,7 @@ const ChartTypeSelector = ({ chartType }) => {
 			value: "line",
 		},
 		{
-			value: "horizontal bar",
+			value: "scatter",
 		},
 	]);
 

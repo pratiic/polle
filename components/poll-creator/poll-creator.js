@@ -253,7 +253,9 @@ const PollCreator = ({ currentUser }) => {
 				typeRef.current.value === "private" && passwordRef.current.value
 					? passwordRef.current.value
 					: "",
-			tags: tagsRef.current.value,
+			tags: tagsRef.current.value
+				? arrayFromString(tagsRef.current.value)
+				: [],
 			createdByID: currentUser.userID,
 			createdBy: currentUser,
 			createdAt: currentTime,
@@ -275,6 +277,11 @@ const PollCreator = ({ currentUser }) => {
 				? { value: option5Ref.current.value, votes: 0 }
 				: null,
 		].filter((pollOption) => pollOption);
+	};
+
+	const arrayFromString = (string) => {
+		const arr = string.split(",");
+		return arr;
 	};
 
 	return (

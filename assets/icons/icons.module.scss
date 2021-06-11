@@ -4,6 +4,10 @@
 	width: 2rem;
 	height: 2rem;
 	cursor: pointer;
+
+	path {
+		fill: $color-five;
+	}
 }
 
 .smaller {

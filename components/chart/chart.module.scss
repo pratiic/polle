@@ -1,8 +1,19 @@
 .chartContainer {
 	flex: 1;
 	margin-right: 3rem;
+
+	@media screen and (max-width: 850px) {
+		margin-bottom: 3rem;
+		margin-right: 0rem;
+		width: 100%;
+	}
 }
 
 .chart {
 	width: 100% !important;
+}
+
+.pie {
+	width: 50rem !important;
+	height: 50rem !important;
 }

@@ -12,7 +12,7 @@
 
 .link {
 	color: $color-five;
-	font-size: 1.8rem;
+	font-size: 1.7rem;
 	cursor: pointer;
 	padding: 0.5rem 0.75rem;
 	display: block;
@@ -21,6 +21,22 @@
 
 	&::first-letter {
 		text-transform: uppercase;
+	}
+
+	&:hover {
+		color: $color-one;
+
+		&::after {
+			background-color: $color-one;
+		}
+	}
+
+	&:active {
+		color: $color-five;
+
+		&::after {
+			background-color: $color-five;
+		}
 	}
 }
 
