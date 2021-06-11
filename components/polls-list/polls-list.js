@@ -6,7 +6,7 @@ const PollsList = ({ polls }) => {
 	return (
 		<div className={styles.pollsList}>
 			{polls.map((poll) => {
-				return <Poll {...poll} key={poll.id} />;
+				return <Poll {...poll} key={poll.pollID} />;
 			})}
 		</div>
 	);

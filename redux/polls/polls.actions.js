@@ -11,3 +11,10 @@ export const addCurrentUserPoll = (poll) => {
 		payload: poll,
 	};
 };
+
+export const setVotedOption = (votedOption) => {
+	return {
+		type: "SET_VOTED_OPTION",
+		payload: votedOption,
+	};
+};

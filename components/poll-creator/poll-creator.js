@@ -129,10 +129,16 @@ const PollCreator = ({ currentUser }) => {
 
 		const emptyResult = validateInputFields();
 
+		if (!emptyResult) {
+			return;
+		}
+
 		setCreating(true);
 
+		console.log(creating);
+
 		try {
-			const result = await createPoll(getPoll());
+			const result = await createPoll(getPoll(), getPollOptions());
 
 			setCreating(false);
 
@@ -157,23 +163,27 @@ const PollCreator = ({ currentUser }) => {
 	const validateInputFields = () => {
 		if (!titleRef.current.value) {
 			// return { error: "title" };
-			return setTitleError("title cannot be empty");
+			setTitleError("title cannot be empty");
+			return false;
 		}
 
 		if (!option1Ref.current.value) {
 			// return { error: "option1" };
-			return setOptionError("option1Error", "option one cannot be empty");
+			setOptionError("option1Error", "option one cannot be empty");
+			return false;
 		}
 
 		if (!option2Ref.current.value) {
 			// return { error: "option2" };
-			return setOptionError("option2Error", "option two cannot be empty");
+			setOptionError("option2Error", "option two cannot be empty");
+			return false;
 		}
 
 		if (durationType === "time") {
 			if (!timeDurationRef.current.value) {
 				// return { error: "timeDuration", type: "empty" };
-				return setTimeDurationError("duration cannot be empty");
+				setTimeDurationError("duration cannot be empty");
+				return false;
 			}
 
 			if (
@@ -181,7 +191,8 @@ const PollCreator = ({ currentUser }) => {
 				isNaN(Number(timeDurationRef.current.value))
 			) {
 				// return { error: "timeDuration", type: "invalid" };
-				return setTimeDurationError("duration is not valid");
+				setTimeDurationError("duration is not valid");
+				return false;
 			}
 		}
 
@@ -190,7 +201,8 @@ const PollCreator = ({ currentUser }) => {
 			const currentDate = new Date();
 
 			if (!dateDurationRef.current.value) {
-				return setDateDurationError("date cannot be empty");
+				setDateDurationError("date cannot be empty");
+				return false;
 			}
 
 			if (
@@ -199,16 +211,20 @@ const PollCreator = ({ currentUser }) => {
 				startingDate.getDate() <= currentDate.getDate()
 			) {
 				// return { error: "dateDuration" };
-				return setDateDurationError("date duration is not valid");
+				setDateDurationError("date duration is not valid");
+				return false;
 			}
 		}
 
 		if (type === "private") {
 			if (!passwordRef.current.value) {
 				// return { error: "password" };
-				return setPasswordError("password cannot be empty");
+				setPasswordError("password cannot be empty");
+				return false;
 			}
 		}
+
+		return true;
 	};
 
 	const setOptionError = (option, error) => {
@@ -230,28 +246,7 @@ const PollCreator = ({ currentUser }) => {
 
 		return {
 			title: titleRef.current.value,
-			options: [
-				{ value: option1Ref.current.value, votes: 0 },
-				{ value: option2Ref.current.value, votes: 0 },
-				option3Ref.current && option3Ref.current.value
-					? { value: option3Ref.current.value, votes: 0 }
-					: null,
-				option4Ref.current && option4Ref.current.value
-					? { value: option4Ref.current.value, votes: 0 }
-					: null,
-				option5Ref.current && option5Ref.current.value
-					? { value: option5Ref.current.value, votes: 0 }
-					: null,
-			],
-			// durationType: durationRef.current.value,
-			// timeDuration:
-			// 	timeDurationRef.current && timeDurationRef.current.value
-			// 		? timeDurationRef.current.value
-			// 		: "",
-			// dateDuration:
-			// 	dateDurationRef.current && dateDurationRef.current.value
-			// 		? dateDurationRef.current.value
-			// 		: "",
+			options: getPollOptions().map((pollOption) => pollOption.value),
 			duration: duration,
 			type: typeRef.current.value,
 			password:
@@ -264,6 +259,22 @@ const PollCreator = ({ currentUser }) => {
 			createdAt: currentTime,
 			pollID: pollID,
 		};
+	};
+
+	const getPollOptions = () => {
+		return [
+			{ value: option1Ref.current.value, votes: 0 },
+			{ value: option2Ref.current.value, votes: 0 },
+			option3Ref.current && option3Ref.current.value
+				? { value: option3Ref.current.value, votes: 0 }
+				: null,
+			option4Ref.current && option4Ref.current.value
+				? { value: option4Ref.current.value, votes: 0 }
+				: null,
+			option5Ref.current && option5Ref.current.value
+				? { value: option5Ref.current.value, votes: 0 }
+				: null,
+		].filter((pollOption) => pollOption);
 	};
 
 	return (

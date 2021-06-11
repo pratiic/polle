@@ -30,6 +30,7 @@
 
 .message {
 	color: $color-five;
+	text-align: center;
 
 	&::first-letter {
 		text-transform: uppercase;

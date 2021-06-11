@@ -1,0 +1,42 @@
+@import "../../styles/variables.module.scss";
+
+.chartTypeSelector {
+	position: relative;
+}
+
+.typeContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.55rem;
+	padding: 0.3rem 1.5rem;
+	background-color: $color-three;
+	border-radius: 5px;
+	width: fit-content;
+	color: $color-five;
+	cursor: pointer;
+
+	&:hover {
+		background-color: $color-four;
+	}
+
+	&:active {
+		background-color: $color-three;
+	}
+}
+
+.icon {
+	path {
+		fill: $color-five;
+	}
+}
+
+.type {
+	display: block;
+	margin-right: 0.75rem;
+}
+
+.dropdown {
+	position: absolute;
+	top: 3.5rem;
+}

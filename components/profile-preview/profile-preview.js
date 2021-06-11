@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import styles from "./profile-preview.module.scss";
+
+import { setCurrentUserPolls } from "../../redux/polls/polls.actions";
 
 import { auth } from "../../firebase/firebase.utils";
 
@@ -12,12 +15,15 @@ import DropdownItem from "../dropdown-item/dropdown-item";
 const ProfilePreview = ({ username }) => {
 	const [showDropdownMenu, setShowDropdownMenu] = useState(false);
 
+	const dispatch = useDispatch();
+
 	const toggleDropdownMenu = () => {
 		setShowDropdownMenu(!showDropdownMenu);
 	};
 
 	const handleSignOutItemClick = () => {
 		auth.signOut();
+		dispatch(setCurrentUserPolls([]));
 	};
 
 	return (

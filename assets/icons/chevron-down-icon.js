@@ -1,12 +1,12 @@
 import styles from "./icons.module.scss";
 
-const ChevronDownIcon = ({ extraStyles }) => {
+const ChevronDownIcon = ({ extraStyles, size }) => {
 	return (
 		<svg
 			version="1.1"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 768 768"
-			className={`${styles.icon} ${extraStyles}`}
+			className={`${styles.icon} ${extraStyles} ${ size === "smaller" && styles.smaller }`}
 		>
 			<title></title>
 			<g id="icomoon-ignore"></g>

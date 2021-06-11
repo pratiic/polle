@@ -2,6 +2,8 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
+import { arrFromDocs } from "../components/utils/utils.results";
+
 const firebaseConfig = {
 	apiKey: "AIzaSyAbED2K5TC3ekQsK8cfUfhy3HyUPigZIUE",
 	authDomain: "polle-3467a.firebaseapp.com",
@@ -24,9 +26,24 @@ export const firestore = firebase.firestore();
 
 export const auth = firebase.auth();
 
-export const createPoll = async (poll) => {
+export const createPoll = async (poll, pollOptions) => {
+	const batch = firestore.batch();
+
 	try {
 		await firestore.collection("polls").doc(poll.pollID).set(poll);
+
+		pollOptions.forEach((pollOption) => {
+			batch.set(
+				firestore
+					.collection("polls")
+					.doc(poll.pollID)
+					.collection("options")
+					.doc(pollOption.value),
+				pollOption
+			);
+		});
+
+		await batch.commit();
 
 		return {
 			message: "created",
@@ -129,6 +146,23 @@ export const getAllPolls = async () => {
 	}
 };
 
+export const getPollOptions = async (pollID) => {
+	try {
+		const optionsCollectionRef = await firestore
+			.collection("polls")
+			.doc(pollID)
+			.collection("options")
+			.get();
+		const options = optionsCollectionRef.docs;
+		console.log(options);
+		return { options };
+	} catch (error) {
+		return {
+			error: error,
+		};
+	}
+};
+
 // export const getAllUsers = async () => {
 // 	try {
 // 		const usersCollectionRef = await firestore.collection("users").get();
@@ -143,14 +177,68 @@ export const getAllPolls = async () => {
 
 export const getPoll = async (pollID) => {
 	try {
-		const pollsCollectionRef = await firestore
+		const [pollsCollectionRef, optionsCollectionRef] = await Promise.all([
+			firestore.collection("polls").doc(pollID).get(),
+			firestore
+				.collection("polls")
+				.doc(pollID)
+				.collection("options")
+				.get(),
+		]);
+		const poll = pollsCollectionRef.data();
+		const pollOptions = arrFromDocs(optionsCollectionRef.docs);
+		return {
+			poll: { ...poll, options: pollOptions },
+		};
+	} catch (error) {
+		console.log(error);
+		return {
+			error: error,
+		};
+	}
+};
+
+export const addVote = async (pollID, optionID, votes, votedUserID) => {
+	try {
+		await Promise.all([
+			firestore
+				.collection("polls")
+				.doc(pollID)
+				.collection("options")
+				.doc(optionID)
+				.update({ votes: votes }),
+			firestore
+				.collection("polls")
+				.doc(pollID)
+				.collection("votes")
+				.doc(votedUserID)
+				.set({ option: optionID }),
+		]);
+
+		return { message: "vote added" };
+	} catch (error) {
+		return {
+			error: error,
+		};
+	}
+};
+
+export const checkIfVoted = async (pollID, currentUserID) => {
+	console.log(pollID, currentUserID);
+
+	try {
+		const voteDocRef = await firestore
 			.collection("polls")
 			.doc(pollID)
+			.collection("votes")
+			.doc(currentUserID)
 			.get();
-		const poll = await pollsCollectionRef.data();
-		return {
-			poll,
-		};
+
+		if (voteDocRef.exists) {
+			return { voted: true, option: voteDocRef.data().option };
+		}
+
+		return { voted: false };
 	} catch (error) {
 		return {
 			error: error,

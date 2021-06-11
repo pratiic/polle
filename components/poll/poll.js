@@ -1,6 +1,11 @@
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { connect } from "react-redux";
 
 import styles from "./poll.module.scss";
+
+import { getPollOptions } from "../../firebase/firebase.utils";
+import { arrFromDocs } from "../utils/utils.results";
 
 import Button from "../button/button";
 import React from "react";
@@ -8,14 +13,27 @@ import React from "react";
 const Poll = ({
 	title,
 	pollID,
-	options,
 	tags,
 	type,
+	options,
 	createdBy,
 	createdByID,
 	createdAt,
+	currentUser,
 }) => {
 	const router = useRouter();
+
+	// useEffect(() => {
+	// 	getOptions();
+	// }, [currentUser]);
+
+	// const getOptions = async () => {
+	// 	const result = await getPollOptions(pollID);
+
+	// 	if (result.options) {
+	// 		setOptions(arrFromDocs(result.options));
+	// 	}
+	// };
 
 	const renderOptions = () => {
 		return (
@@ -23,16 +41,11 @@ const Poll = ({
 				<h5 className={styles.subTitle}>options</h5>
 				<ul className={styles.itemsList}>
 					{options.map((option) => {
-						if (option) {
-							return (
-								<li
-									className={styles.option}
-									key={option.value}
-								>
-									{option.value}
-								</li>
-							);
-						}
+						return (
+							<li className={styles.option} key={option}>
+								{option}
+							</li>
+						);
 					})}
 				</ul>
 			</React.Fragment>
@@ -125,4 +138,10 @@ const Poll = ({
 	);
 };
 
-export default Poll;
+const mapStateToProps = (state) => {
+	return {
+		currentUser: state.currentUser.currentUser,
+	};
+};
+
+export default connect(mapStateToProps)(Poll);

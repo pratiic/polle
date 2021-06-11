@@ -1,4 +1,8 @@
-#canvas {
-	height: 30rem;
-	width: 40rem;
+.chartContainer {
+	flex: 1;
+	margin-right: 3rem;
+}
+
+.chart {
+	width: 100% !important;
 }

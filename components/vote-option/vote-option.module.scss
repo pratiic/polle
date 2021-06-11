@@ -1,10 +1,11 @@
 @import "../../styles/variables.module.scss";
 
-.option {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 1.5rem;
+.disabledOption {
+	.button {
+		&:hover {
+			background-color: lighten($color-three, 15%);
+		}
+	}
 }
 
 .value {
@@ -12,7 +13,12 @@
 	color: $color-five;
 	font-weight: 500;
 	display: block;
-	margin-right: 0.75rem;
+	margin-bottom: 0.75rem;
+	max-width: 7rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
 
 	&::first-letter {
 		text-transform: uppercase;
@@ -28,8 +34,19 @@
 	font-size: 1.55rem;
 	font-family: inherit;
 	cursor: pointer;
+	min-width: 5rem;
 
 	&:hover {
 		background-color: $color-two;
 	}
+}
+
+.selected {
+	background-color: $color-two;
+}
+
+.winner {
+	background-color: $color-one;
+	color: $color-three;
+	pointer-events: none;
 }

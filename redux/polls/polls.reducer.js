@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
 	currentUserPolls: [],
+	votedOption: "",
 };
 
 export const pollsReducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +11,11 @@ export const pollsReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				currentUserPolls: [action.payload, ...state.currentUserPolls],
+			};
+		case "SET_VOTED_OPTION":
+			return {
+				...state,
+				votedOption: action.payload,
 			};
 		default:
 			return state;

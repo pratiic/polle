@@ -18,3 +18,8 @@
 .colored {
 	color: $color-one;
 }
+
+.capitalized {
+	color: $color-one;
+	text-transform: capitalize;
+}
