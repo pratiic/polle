@@ -22,7 +22,13 @@ const Navbar = ({ currentUser }) => {
 			value: "my polls",
 			linkTo: `/${currentUser.userID}`,
 			active: false,
-			path: `/${currentUser.userID}`,
+			path: "/[userID]",
+		},
+		{
+			value: "voted",
+			linkTo: `/voted/${currentUser.userID}`,
+			active: false,
+			path: "/voted/[userID]",
 		},
 		{
 			value: "create",
@@ -49,10 +55,7 @@ const Navbar = ({ currentUser }) => {
 	useEffect(() => {
 		setNavLinks(
 			navLinks.map((navLink) => {
-				if (
-					pathname === navLink.path ||
-					`/${query.userID}` === navLink.path
-				) {
+				if (pathname === navLink.path) {
 					return { ...navLink, active: true };
 				}
 

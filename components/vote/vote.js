@@ -25,6 +25,7 @@ const Vote = ({
 	type,
 	password,
 	votedOption,
+	votedBy,
 }) => {
 	const [currentUser, setCurrentUser] = useState(getCurrentUser());
 	const [selectedOption, setSelectedOption] = useState("");
@@ -103,7 +104,8 @@ const Vote = ({
 				selectedOption,
 				options.find((option) => option.value === selectedOption)
 					.votes + 1,
-				currentUser.userID
+				currentUser.userID,
+				votedBy
 			);
 			setVoting(false);
 		}

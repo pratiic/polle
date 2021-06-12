@@ -10,7 +10,9 @@ const Button = ({ type, children, clickHandler, color, size, align, font }) => {
 				color === "blue" && styles.blue
 			} ${size === "full" && styles.full} ${
 				align === "center" && styles.centered
-			} ${font === "smaller" && styles.fontSmaller}`}
+			} ${font === "smaller" && styles.fontSmaller} ${
+				color === "green" && styles.green
+			}`}
 			onClick={clickHandler}
 		>
 			{children}

@@ -170,6 +170,7 @@ const PollDetailsPage = ({ poll, error }) => {
 					totalVotes={totalVotes}
 					type={poll.type}
 					password={poll.password}
+					votedBy={poll.votedBy}
 				/>
 			</div>
 		</div>

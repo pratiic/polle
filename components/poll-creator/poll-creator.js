@@ -263,6 +263,7 @@ const PollCreator = () => {
 			createdByID: currentUser.userID,
 			createdBy: currentUser,
 			createdAt: currentTime,
+			votedBy: [],
 			pollID: pollID,
 		};
 	};

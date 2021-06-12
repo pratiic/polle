@@ -4,11 +4,16 @@ import { useDispatch, connect } from "react-redux";
 
 import styles from "./poll-search.module.scss";
 
-import { setSearchValue } from "../../redux/search/search.actions";
+import {
+	setSearching,
+	setSearchValue,
+} from "../../redux/search/search.actions";
 
 import SearchIcon from "../../assets/icons/search.icon";
 
 const PollSearch = ({ searchValue }) => {
+	const [search, setSearch] = useState("");
+
 	const router = useRouter();
 
 	const dispatch = useDispatch();
@@ -16,15 +21,17 @@ const PollSearch = ({ searchValue }) => {
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 
-		if (!searchValue) {
+		if (!search) {
 			return;
 		}
 
+		dispatch(setSearchValue(search));
+		dispatch(setSearching(true));
 		router.push("/search");
 	};
 
 	const handleInputChange = (event) => {
-		dispatch(setSearchValue(event.target.value));
+		setSearch(event.target.value);
 	};
 
 	return (
@@ -34,7 +41,7 @@ const PollSearch = ({ searchValue }) => {
 					type="text"
 					className={styles.input}
 					placeholder="search with title or tags"
-					value={searchValue}
+					value={search}
 					onChange={handleInputChange}
 				/>
 				<SearchIcon size="smaller" extraStyles={styles.icon} />

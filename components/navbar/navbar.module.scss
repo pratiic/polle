@@ -41,13 +41,15 @@
 }
 
 .active {
+	color: $color-one;
+
 	&::after {
 		content: "";
 		position: absolute;
 		left: 50%;
 		bottom: 0;
 		transform: translateX(-50%);
-		background-color: $color-five;
+		background-color: $color-one;
 		width: 75%;
 		height: 2px;
 	}

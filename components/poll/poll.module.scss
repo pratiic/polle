@@ -2,9 +2,9 @@
 
 .poll {
 	padding: 1rem;
-	background-color: lighten($color-two, 7%);
+	background-color: $color-three;
 	border-radius: 5px;
-	box-shadow: 0 0 0.55rem 0 rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 0.75rem 0 rgba(0, 0, 0, 0.35);
 	cursor: pointer;
 	height: fit-content;
 }
@@ -38,7 +38,7 @@
 
 .option,
 .tag {
-	background-color: $color-three;
+	background-color: $color-four;
 	font-size: 1.55rem;
 	padding: 0.35rem 0.75rem;
 	border-radius: 5px;

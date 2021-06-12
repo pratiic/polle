@@ -122,7 +122,7 @@ const Poll = ({
 			<Button
 				align="center"
 				font="smaller"
-				color={type !== "private" ? "red" : "blue"}
+				color={type === "private" ? "green" : null}
 			>
 				view details
 			</Button>

@@ -204,7 +204,13 @@ export const getPoll = async (pollID) => {
 	}
 };
 
-export const addVote = async (pollID, optionID, votes, votedUserID) => {
+export const addVote = async (
+	pollID,
+	optionID,
+	votes,
+	votedUserID,
+	votedBy
+) => {
 	try {
 		await Promise.all([
 			firestore
@@ -219,6 +225,12 @@ export const addVote = async (pollID, optionID, votes, votedUserID) => {
 				.collection("votes")
 				.doc(votedUserID)
 				.set({ option: optionID }),
+			firestore
+				.collection("polls")
+				.doc(pollID)
+				.update({
+					votedBy: [...votedBy, votedUserID],
+				}),
 		]);
 
 		return { message: "vote added" };
@@ -260,6 +272,20 @@ export const searchPolls = async (value) => {
 			firestore.collection("polls").where("title", "==", value).get(),
 		]);
 		return { results: [...titleResults.docs, ...tagsResults.docs] };
+	} catch (error) {
+		return {
+			error: error,
+		};
+	}
+};
+
+export const getVotedPolls = async (userID) => {
+	try {
+		const pollsCollectionRef = await firestore
+			.collection("polls")
+			.where("votedBy", "array-contains", userID)
+			.get();
+		return { polls: pollsCollectionRef.docs };
 	} catch (error) {
 		return {
 			error: error,

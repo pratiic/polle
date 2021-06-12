@@ -4,3 +4,10 @@ export const setSearchValue = (searchValue) => {
 		payload: searchValue,
 	};
 };
+
+export const setSearching = (searching) => {
+	return {
+		type: "SET_SEARCHING",
+		payload: searching,
+	};
+};
