@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import Head from "next/head";
 
 import styles from "./search.module.scss";
 import genericStyles from "../../styles/generic.module.scss";
@@ -36,6 +37,12 @@ const SearchPage = ({ searchValue }) => {
 
 	return (
 		<div className={genericStyles.page}>
+			<Head>
+				<title>Search</title>
+				<meta name="description" content="search for polls" />
+				<meta name="keywords" content="search poll, poll, polle" />
+			</Head>
+
 			<PageHeader
 				text={`search results for "${searchValue}"`}
 				extraStyles={styles.pageHeader}

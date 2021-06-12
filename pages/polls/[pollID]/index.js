@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import styles from "./poll-details.module.scss";
 import genericStyles from "../../../styles/generic.module.scss";
@@ -139,6 +140,15 @@ const PollDetailsPage = ({ poll, error }) => {
 
 	return (
 		<div className={genericStyles.page}>
+			<Head>
+				<title>{poll.title}</title>
+				<meta
+					name="description"
+					content="View the details about a poll, view results, votes and vote on it"
+				/>
+				<meta name="keywords" content="vote, poll, polle" />
+			</Head>
+
 			<PageHeader text={poll.title} />
 			<PollInfo
 				createdBy={poll.createdBy}

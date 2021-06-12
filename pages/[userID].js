@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -53,6 +55,15 @@ const UserPollsPage = ({ polls, error, currentUser }) => {
 
 	return (
 		<div className={`${styles.mainPage} ${genericStyles.page}`}>
+			<Head>
+				<title>My polls</title>
+				<meta
+					name="description"
+					content="Shows polls created the user that is logged in to the system"
+				/>
+				<meta name="keywords" content="polls" />
+			</Head>
+
 			<PageHeader text="your polls">
 				<CreatePoll />
 			</PageHeader>

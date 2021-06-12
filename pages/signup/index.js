@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
+import Head from "next/head";
 
 import styles from "./signup.module.scss";
 import genericStyles from "../../styles/generic.module.scss";
@@ -149,6 +150,12 @@ const SignUpPage = () => {
 
 	return (
 		<div className={genericStyles.page}>
+			<Head>
+				<title>Sign Up</title>
+				<meta name="description" content="sign up to polle" />
+				<meta name="keywords" content="sign up, polle, poll" />
+			</Head>
+
 			<h2 className={`${genericStyles.title} ${styles.title}`}>
 				sign up with polle
 			</h2>
