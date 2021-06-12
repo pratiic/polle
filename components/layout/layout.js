@@ -17,7 +17,7 @@ const Layout = ({ children, currentUser }) => {
 
 	useEffect(() => {
 		if (currentUser) {
-			router.push("/");
+			router.push(`/${ currentUser.userID }`);
 		} else {
 			router.push("/signin");
 		}

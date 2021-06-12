@@ -29,6 +29,7 @@ export const getStaticProps = async () => {
 			polls: result.polls ? arrFromDocs(result.polls) : null,
 			error: result.error ? result.error.message : null,
 		},
+		revalidate: 30,
 	};
 };
 

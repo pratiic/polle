@@ -2,11 +2,13 @@ import { useRouter } from "next/router";
 
 import styles from "./logo.module.scss";
 
-const Logo = () => {
+const Logo = ({ currentUser }) => {
 	const router = useRouter();
 
 	const handleLogoClick = () => {
-		router.push("/");
+		if (currentUser) {
+			router.push(`/${currentUser}`);
+		}
 	};
 
 	return (

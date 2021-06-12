@@ -18,9 +18,13 @@ const PollInfo = ({
 	const [remainingTime, setRemainingTime] = useState("");
 
 	useEffect(() => {
-		setInterval(() => {
+		const getTimeInterval = setInterval(() => {
 			setRemainingTime(getRemainingTime(duration));
 		}, 1000);
+
+		return () => {
+			clearInterval(getTimeInterval);
+		};
 	}, []);
 
 	const getDateAndTime = (milliseconds) => {

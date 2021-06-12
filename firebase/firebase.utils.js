@@ -177,19 +177,25 @@ export const getPollOptions = async (pollID) => {
 
 export const getPoll = async (pollID) => {
 	try {
-		const [pollsCollectionRef, optionsCollectionRef] = await Promise.all([
-			firestore.collection("polls").doc(pollID).get(),
-			firestore
+		const [pollDocRef, optionsCollectionRef] = await Promise.all([
+			firebase.firestore().collection("polls").doc(pollID).get(),
+			firebase
+				.firestore()
 				.collection("polls")
 				.doc(pollID)
 				.collection("options")
 				.get(),
 		]);
-		const poll = pollsCollectionRef.data();
+		const poll = pollDocRef.data();
 		const pollOptions = arrFromDocs(optionsCollectionRef.docs);
-		return {
-			poll: { ...poll, options: pollOptions },
-		};
+
+		if (pollDocRef.exists) {
+			return {
+				poll: { ...poll, options: pollOptions },
+			};
+		} else {
+			return { error: "poll does not exist" };
+		}
 	} catch (error) {
 		console.log(error);
 		return {
@@ -224,8 +230,6 @@ export const addVote = async (pollID, optionID, votes, votedUserID) => {
 };
 
 export const checkIfVoted = async (pollID, currentUserID) => {
-	console.log(pollID, currentUserID);
-
 	try {
 		const voteDocRef = await firestore
 			.collection("polls")

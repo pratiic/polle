@@ -143,8 +143,8 @@ const PollCreator = ({ currentUser }) => {
 			setCreating(false);
 
 			if (result.message === "created") {
-				router.push("/");
-				dispatch(addCurrentUserPoll(getPoll()));
+				router.push(`/${ currentUser.userID }`);
+				// dispatch(addCurrentUserPoll(getPoll()));
 			}
 		} catch (error) {
 			console.log(error);

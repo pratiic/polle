@@ -36,7 +36,7 @@ const Header = ({ currentUser }) => {
 	return (
 		<header className={styles.header}>
 			<div className={layoutStyles.headerWrapper}>
-				<Logo />
+				<Logo currentUser={currentUser ? currentUser.userID : null} />
 				{currentUser ? <Navbar /> : renderButton()}
 			</div>
 		</header>

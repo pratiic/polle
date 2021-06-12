@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useRouter } from "next/router";
 
 import styles from "./poll-details.module.scss";
 import genericStyles from "../../../styles/generic.module.scss";
@@ -10,7 +11,7 @@ import {
 	firestore,
 } from "../../../firebase/firebase.utils";
 import { arrFromDocs } from "../../../components/utils/utils.results";
-import { chartColors } from "./chart-colors";
+import { chartColors } from "../../../components/utils/utils.chart";
 
 import PageHeader from "../../../components/page-header/page-header";
 import Chart from "../../../components/chart/chart";
@@ -18,7 +19,15 @@ import PollInfo from "../../../components/poll-info/poll-info";
 import Vote from "../../../components/vote/vote";
 import ChartTypeSelector from "../../../components/chart-type-selector/chart-type-selector";
 
-const PollDetailsPage = ({ poll }) => {
+const PollDetailsPage = ({ poll, error }) => {
+	console.log(error);
+
+	if (error) {
+		return <p>does not exist</p>;
+	}
+
+	const router = useRouter();
+
 	const [chartOptions, setChartOptions] = useState({});
 	const [pollEnded, setPollEnded] = useState(false);
 	const [pollOptions, setPollOptions] = useState(poll.options);
@@ -26,8 +35,6 @@ const PollDetailsPage = ({ poll }) => {
 	const [totalVotes, setTotalVotes] = useState(0);
 
 	useEffect(() => {
-		getPollEnded();
-
 		firestore
 			.collection("polls")
 			.doc(poll.pollID)
@@ -35,6 +42,20 @@ const PollDetailsPage = ({ poll }) => {
 			.onSnapshot((snapshot) => {
 				setPollOptions(arrFromDocs(snapshot.docs));
 			});
+	}, []);
+
+	useEffect(() => {
+		const pollInterval = setInterval(() => {
+			const currentTime = new Date().getTime();
+
+			if (currentTime >= poll.duration) {
+				setPollEnded(true);
+			}
+		}, 1000);
+
+		return () => {
+			clearInterval(pollInterval);
+		};
 	}, []);
 
 	useEffect(() => {
@@ -96,16 +117,6 @@ const PollDetailsPage = ({ poll }) => {
 		return { labels, datasets };
 	};
 
-	const getPollEnded = () => {
-		setInterval(() => {
-			const currentTime = new Date().getTime();
-
-			if (currentTime >= poll.duration) {
-				setPollEnded(true);
-			}
-		}, 1000);
-	};
-
 	const findHighestVote = (votes) => {
 		let highest = -1;
 		votes.forEach((vote) => {
@@ -155,28 +166,40 @@ const PollDetailsPage = ({ poll }) => {
 	);
 };
 
-export const getStaticProps = async (context) => {
+// export const getStaticProps = async (context) => {
+// 	const result = await getPoll(context.params.pollID);
+
+// 	return {
+// 		props: {
+// 			poll: result.poll ? result.poll : null,
+// 			error: result.error ? result.error : null,
+// 		},
+// 	};
+// };
+
+// export const getStaticPaths = async () => {
+// 	const result = await getAllPolls();
+
+// 	const polls = arrFromDocs(result.polls);
+
+// 	const paths = polls.map((poll) => {
+// 		return { params: { pollID: poll.pollID } };
+// 	});
+
+// 	return {
+// 		paths: paths,
+// 		fallback: true,
+// 	};
+// };
+
+export const getServerSideProps = async (context) => {
 	const result = await getPoll(context.params.pollID);
 
 	return {
 		props: {
-			poll: result.poll,
+			poll: result.poll ? result.poll : null,
+			error: result.error ? result.error : null,
 		},
-	};
-};
-
-export const getStaticPaths = async () => {
-	const result = await getAllPolls();
-
-	const polls = arrFromDocs(result.polls);
-
-	const paths = polls.map((poll) => {
-		return { params: { pollID: poll.pollID } };
-	});
-
-	return {
-		paths: paths,
-		fallback: true,
 	};
 };
 
