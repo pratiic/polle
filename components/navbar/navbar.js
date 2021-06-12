@@ -5,12 +5,18 @@ import { connect } from "react-redux";
 
 import { auth } from "../../firebase/firebase.utils";
 
+import { getCurrentUser } from "../utils/utils.current-user";
+
 import styles from "./navbar.module.scss";
 
 import Button from "../button/button";
 import ProfilePreview from "../profile-preview/profile-preview";
 
 const Navbar = ({ currentUser }) => {
+	const [localStorage, setLocalStorage] = useState(
+		typeof window !== "undefined" ? window.localStorage : null
+	);
+
 	const [navLinks, setNavLinks] = useState([
 		{
 			value: "my polls",
@@ -80,10 +86,4 @@ const Navbar = ({ currentUser }) => {
 	);
 };
 
-const mapStateToProps = (state) => {
-	return {
-		currentUser: state.currentUser.currentUser,
-	};
-};
-
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

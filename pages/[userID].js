@@ -1,26 +1,33 @@
-import Head from "next/head";
-
 import { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import styles from "../styles/main.module.scss";
 import genericStyles from "../styles/generic.module.scss";
 
 import { setCurrentUserPolls } from "../redux/polls/polls.actions";
+import { showNotification } from "../redux/notification/notification.actions";
+
 import { getUserPolls, firestore } from "../firebase/firebase.utils";
 import { arrFromDocs } from "../components/utils/utils.results";
+import { getCurrentUser } from "../components/utils/utils.current-user";
 
 import PollsList from "../components/polls-list/polls-list";
 import CreatePoll from "../components/create-poll/create-poll";
 import PageHeader from "../components/page-header/page-header";
 
-const UserPollsPage = ({ polls, error, currentUser }) => {
+const UserPollsPage = ({ polls, error }) => {
 	const [pollsMessage, setPollsMessage] = useState("");
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
 	const router = useRouter();
 
 	const dispatch = useDispatch();
+
+	// if (!currentUser) {
+	// 	dispatch(showNotification("you need to sign in", true));
+	// }
 
 	useEffect(() => {
 		if (!currentUser) {

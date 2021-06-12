@@ -4,3 +4,15 @@ export const setCurrentUser = (user) => {
 		payload: user,
 	};
 };
+
+export const signUserIn = () => {
+	return {
+		type: "SIGN_IN",
+	};
+};
+
+export const signUserOut = () => {
+	return {
+		type: "SIGN_OUT",
+	};
+};

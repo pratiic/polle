@@ -6,6 +6,7 @@ import styles from "./poll.module.scss";
 
 import { getPollOptions } from "../../firebase/firebase.utils";
 import { arrFromDocs } from "../utils/utils.results";
+import { getCurrentUser } from "../utils/utils.current-user";
 
 import Button from "../button/button";
 import React from "react";
@@ -19,8 +20,9 @@ const Poll = ({
 	createdBy,
 	createdByID,
 	createdAt,
-	currentUser,
 }) => {
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
+
 	const router = useRouter();
 
 	// useEffect(() => {

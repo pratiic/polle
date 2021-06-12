@@ -10,6 +10,7 @@ import {
 	checkIfVoted,
 	firestore,
 } from "../../firebase/firebase.utils";
+import { getCurrentUser } from "../utils/utils.current-user";
 
 import VoteOption from "../vote-option/vote-option";
 import Button from "../button/button";
@@ -18,7 +19,6 @@ import CustomInput from "../custom-input/custom-input";
 const Vote = ({
 	options,
 	pollID,
-	currentUser,
 	pollEnded,
 	winners,
 	totalVotes,
@@ -26,6 +26,7 @@ const Vote = ({
 	password,
 	votedOption,
 }) => {
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
 	const [selectedOption, setSelectedOption] = useState("");
 	const [optionsToDisplay, setOptionsToDisplay] = useState(
 		options.map((option) => {

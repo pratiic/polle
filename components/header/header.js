@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -5,13 +6,21 @@ import { useRouter } from "next/router";
 import styles from "./header.module.scss";
 import layoutStyles from "../../styles/layout.module.scss";
 
+import { getCurrentUser } from "../utils/utils.current-user";
+
 import Logo from "../../assets/logo/logo";
 
 import Navbar from "../navbar/navbar";
 import Button from "../button/button";
 
-const Header = ({ currentUser }) => {
+const Header = ({ signedIn }) => {
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
+
 	const router = useRouter();
+
+	useEffect(() => {
+		setCurrentUser(getCurrentUser());
+	}, [signedIn]);
 
 	const renderButton = () => {
 		return router.pathname.includes("/signin") ? (
@@ -36,8 +45,12 @@ const Header = ({ currentUser }) => {
 	return (
 		<header className={styles.header}>
 			<div className={layoutStyles.headerWrapper}>
-				<Logo currentUser={currentUser ? currentUser.userID : null} />
-				{currentUser ? <Navbar /> : renderButton()}
+				<Logo currentUser={currentUser} />
+				{currentUser ? (
+					<Navbar currentUser={currentUser} />
+				) : (
+					renderButton()
+				)}
 			</div>
 		</header>
 	);
@@ -46,6 +59,7 @@ const Header = ({ currentUser }) => {
 const mapStateToProps = (state) => {
 	return {
 		currentUser: state.currentUser.currentUser,
+		signedIn: state.currentUser.signedIn,
 	};
 };
 

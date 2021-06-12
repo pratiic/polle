@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
 	currentUser: null,
+	signedIn: false,
 };
 
 export const currentUserReducer = (state = INITIAL_STATE, action) => {
@@ -8,6 +9,16 @@ export const currentUserReducer = (state = INITIAL_STATE, action) => {
 			return {
 				...state,
 				currentUser: action.payload,
+			};
+		case "SIGN_IN":
+			return {
+				...state,
+				signedIn: true,
+			};
+		case "SIGN_OUT":
+			return {
+				...state,
+				signedIn: false,
 			};
 		default:
 			return state;

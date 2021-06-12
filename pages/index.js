@@ -1,6 +1,21 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+
+import { getCurrentUser } from "../components/utils/utils.current-user";
 
 const MainPage = () => {
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
+
+	const router = useRouter();
+
+	useEffect(() => {
+		if (currentUser) {
+			return router.push(`/${currentUser.userID}`);
+		}
+		return router.push("/signin");
+	}, []);
+
 	return (
 		<div>
 			<Head>

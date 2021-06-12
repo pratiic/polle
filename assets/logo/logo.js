@@ -7,7 +7,7 @@ const Logo = ({ currentUser }) => {
 
 	const handleLogoClick = () => {
 		if (currentUser) {
-			router.push(`/${currentUser}`);
+			router.push(`/${currentUser.userID}`);
 		}
 	};
 

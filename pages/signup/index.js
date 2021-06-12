@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import styles from "./signup.module.scss";
 import genericStyles from "../../styles/generic.module.scss";
 
 import { signUp, firestore, addUser } from "../../firebase/firebase.utils";
+import { getCurrentUser } from "../../components/utils/utils.current-user";
 
 import CustomInput from "../../components/custom-input/custom-input";
 import Button from "../../components/button/button";
@@ -16,11 +18,18 @@ const SignUpPage = () => {
 	const [passwordError, setPasswordError] = useState("");
 	const [repeatedPasswordError, setRepeatedPasswordError] = useState("");
 	const [signingUp, setSigningUp] = useState(false);
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
 	const usernameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const repeatedPasswordRef = useRef();
+
+	const router = useRouter();
+
+	if (currentUser) {
+		router.push(`/${currentUser.userID}`);
+	}
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();

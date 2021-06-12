@@ -10,11 +10,12 @@ import { addCurrentUserPoll } from "../../redux/polls/polls.actions";
 import { showNotification } from "../../redux/notification/notification.actions";
 
 import { createPoll } from "../../firebase/firebase.utils";
+import { getCurrentUser } from "../utils/utils.current-user";
 
 import CustomInput from "../custom-input/custom-input";
 import Button from "../button/button";
 
-const PollCreator = ({ currentUser }) => {
+const PollCreator = () => {
 	const [options, setOptions] = useState(2);
 	const [durationType, setDurationType] = useState("time");
 	const [type, setType] = useState("open");
@@ -27,6 +28,7 @@ const PollCreator = ({ currentUser }) => {
 	const [dateDurationError, setDateDurationError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [creating, setCreating] = useState(false);
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
 	const titleRef = useRef();
 	const optionsRef = useRef();

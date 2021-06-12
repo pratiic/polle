@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 import styles from "./signin.module.scss";
 import genericStyles from "../../styles/generic.module.scss";
@@ -9,6 +10,7 @@ import genericStyles from "../../styles/generic.module.scss";
 import { showNotification } from "../../redux/notification/notification.actions";
 
 import { signIn } from "../../firebase/firebase.utils";
+import { getCurrentUser } from "../../components/utils/utils.current-user";
 
 import CustomInput from "../../components/custom-input/custom-input";
 import Button from "../../components/button/button";
@@ -17,6 +19,13 @@ const SignIn = () => {
 	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [signingIn, setSigningIn] = useState(false);
+	const [currentUser, setCurrentUser] = useState(getCurrentUser());
+
+	const router = useRouter();
+
+	if (currentUser) {
+		router.push(`/${currentUser.userID}`);
+	}
 
 	const emailRef = useRef();
 	const passwordRef = useRef();
