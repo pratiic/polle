@@ -7,6 +7,7 @@ import genericStyles from "../../styles/generic.module.scss";
 import customInputStyles from "../custom-input/custom-input.module.scss";
 
 import { addCurrentUserPoll } from "../../redux/polls/polls.actions";
+import { showNotification } from "../../redux/notification/notification.actions";
 
 import { createPoll } from "../../firebase/firebase.utils";
 
@@ -143,8 +144,9 @@ const PollCreator = ({ currentUser }) => {
 			setCreating(false);
 
 			if (result.message === "created") {
-				router.push(`/${ currentUser.userID }`);
+				router.push(`/${currentUser.userID}`);
 				// dispatch(addCurrentUserPoll(getPoll()));
+				dispatch(showNotification("poll created successfully", true));
 			}
 		} catch (error) {
 			console.log(error);

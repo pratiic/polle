@@ -5,10 +5,12 @@ import { useRouter } from "next/router";
 import styles from "../../styles/layout.module.scss";
 
 import { setCurrentUser } from "../../redux/current-user/current-user.actions";
+import { showNotification } from "../../redux/notification/notification.actions";
 
 import { auth, getCurrentUser } from "../../firebase/firebase.utils";
 
 import Header from "../header/header";
+import Notification from "../notification/notification";
 
 const Layout = ({ children, currentUser }) => {
 	const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Layout = ({ children, currentUser }) => {
 
 	useEffect(() => {
 		if (currentUser) {
-			router.push(`/${ currentUser.userID }`);
+			router.push(`/${currentUser.userID}`);
 		} else {
 			router.push("/signin");
 		}
@@ -28,6 +30,7 @@ const Layout = ({ children, currentUser }) => {
 			if (user) {
 				const currentUser = await getCurrentUser(user.uid);
 				dispatch(setCurrentUser(currentUser));
+				dispatch(showNotification("you are signed in", true));
 			} else {
 				dispatch(setCurrentUser(null));
 			}
@@ -36,6 +39,7 @@ const Layout = ({ children, currentUser }) => {
 
 	return (
 		<div>
+			<Notification />
 			<Header />
 			<div className={styles.wrapper}>{children}</div>
 		</div>

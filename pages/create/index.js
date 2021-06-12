@@ -4,6 +4,7 @@ import styles from "./create.module.scss";
 import genericStyles from "../../styles/generic.module.scss";
 
 import PollCreator from "../../components/poll-creator/poll-creator";
+import PageHeader from "../../components/page-header/page-header";
 
 const CreatePage = () => {
 	return (
@@ -14,11 +15,7 @@ const CreatePage = () => {
 				<meta name="keywords" content="poll, create poll, polle" />
 			</Head>
 
-			<h2
-				className={`${genericStyles.title} ${genericStyles.titleCenter} ${styles.title}`}
-			>
-				create a new poll
-			</h2>
+			<PageHeader text="create a new poll" extraStyles={styles.header} />
 			<PollCreator />
 		</div>
 	);

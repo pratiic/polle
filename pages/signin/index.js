@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { useDispatch } from "react-redux";
 
 import styles from "./signin.module.scss";
 import genericStyles from "../../styles/generic.module.scss";
+
+import { showNotification } from "../../redux/notification/notification.actions";
 
 import { signIn } from "../../firebase/firebase.utils";
 
@@ -17,6 +20,8 @@ const SignIn = () => {
 
 	const emailRef = useRef();
 	const passwordRef = useRef();
+
+	const dispatch = useDispatch();
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();

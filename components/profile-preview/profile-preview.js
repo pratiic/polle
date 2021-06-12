@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import styles from "./profile-preview.module.scss";
 
 import { setCurrentUserPolls } from "../../redux/polls/polls.actions";
+import { showNotification } from "../../redux/notification/notification.actions";
 
 import { auth } from "../../firebase/firebase.utils";
 
@@ -24,6 +25,7 @@ const ProfilePreview = ({ username }) => {
 	const handleSignOutItemClick = () => {
 		auth.signOut();
 		dispatch(setCurrentUserPolls([]));
+		dispatch(showNotification("you are signed out", true));
 	};
 
 	return (
