@@ -79,13 +79,13 @@ const Poll = ({
 		const differenceInSeconds = Math.round(difference / 1000);
 
 		if (differenceInSeconds < 60) {
-			return "few secs";
+			return "few seconds";
 		} else if (differenceInSeconds < 3600) {
-			return `${Math.round(differenceInSeconds / 60)} min`;
+			return `${Math.round(differenceInSeconds / 60)} minutes`;
 		} else if (differenceInSeconds < 86400) {
-			return `${Math.round(differenceInSeconds / 3600)} hr`;
+			return `${Math.round(differenceInSeconds / 3600)} hours`;
 		} else {
-			return `${Math.round(differenceInSeconds / 86400)}d`;
+			return `${Math.round(differenceInSeconds / 86400)} days`;
 		}
 	};
 

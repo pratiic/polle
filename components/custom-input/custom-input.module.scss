@@ -42,3 +42,9 @@
 .errorInput {
 	border: 2px solid $color-six;
 }
+
+.smaller {
+	.label {
+		font-size: 1.55rem;
+	}
+}

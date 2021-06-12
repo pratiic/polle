@@ -24,7 +24,12 @@ const PollsPage = ({ polls }) => {
 				<PageHeader text="new polls" extraStyles={styles.pageHeader} />
 				<PollSearch />
 			</div>
-			<PollsList polls={polls} />
+
+			{polls.length > 0 ? (
+				<PollsList polls={polls} />
+			) : (
+				<p className={genericStyles.message}>no polls found</p>
+			)}
 		</div>
 	);
 };

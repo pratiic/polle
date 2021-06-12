@@ -1,8 +1,12 @@
 import styles from "./custom-input.module.scss";
 
-const CustomInput = ({ label, type, error, inputRef }) => {
+const CustomInput = ({ label, type, error, inputRef, size }) => {
 	return (
-		<div className={styles.customInput}>
+		<div
+			className={`${styles.customInput} ${
+				size === "smaller" && styles.smaller
+			}`}
+		>
 			<label htmlFor={label} className={styles.label}>
 				{label}
 			</label>

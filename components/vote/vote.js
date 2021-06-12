@@ -153,6 +153,8 @@ const Vote = ({
 					label="password"
 					inputRef={passwordRef}
 					error={passwordError}
+					size="smaller"
+					type="password"
 				/>
 			)}
 
