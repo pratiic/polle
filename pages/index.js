@@ -11,7 +11,7 @@ const MainPage = () => {
 
 	useEffect(() => {
 		if (currentUser) {
-			return router.push(`/${currentUser.userID}`);
+			return router.push(`/${currentUser.userID}/1`);
 		}
 		return router.push("/signin");
 	}, []);

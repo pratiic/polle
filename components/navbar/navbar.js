@@ -20,15 +20,15 @@ const Navbar = ({ currentUser }) => {
 	const [navLinks, setNavLinks] = useState([
 		{
 			value: "my polls",
-			linkTo: `/${currentUser.userID}`,
+			linkTo: `/${currentUser.userID}/1`,
 			active: false,
-			path: "/[userID]",
+			path: "/[...slug]",
 		},
 		{
 			value: "voted",
-			linkTo: `/voted/${currentUser.userID}`,
+			linkTo: `/voted/${currentUser.userID}/1`,
 			active: false,
-			path: "/voted/[userID]",
+			path: "/voted/[...slug]",
 		},
 		{
 			value: "create",
@@ -38,7 +38,7 @@ const Navbar = ({ currentUser }) => {
 		},
 		{
 			value: "polls",
-			linkTo: "/polls",
+			linkTo: "/polls/page/1",
 			active: false,
 			path: "/polls",
 		},
@@ -53,6 +53,8 @@ const Navbar = ({ currentUser }) => {
 	const { pathname, query } = useRouter();
 
 	useEffect(() => {
+		console.log(pathname);
+
 		setNavLinks(
 			navLinks.map((navLink) => {
 				if (pathname === navLink.path) {

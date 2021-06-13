@@ -115,7 +115,7 @@ export const getCurrentUser = async (userID) => {
 	}
 };
 
-export const getUserPolls = async (userID) => {
+export const getUserPolls = async (userID, page, items = 7) => {
 	try {
 		const pollsCollectionRef = await firestore
 			.collection("polls")
@@ -131,17 +131,61 @@ export const getUserPolls = async (userID) => {
 	}
 };
 
-export const getAllPolls = async () => {
+export const getAllPolls = async (page, items = 7, property, value) => {
 	try {
-		const pollsCollectionRef = await firestore
+		if (Number(page) < 1) {
+			return {
+				error: "page not found",
+			};
+		}
+
+		if (Number(page) === 1) {
+			const pollsCollRef = await firestore
+				.collection("polls")
+				.where(
+					property ? property : "createdAt",
+					property ? "==" : ">",
+					value ? value : 1
+				)
+				.orderBy("createdAt", "desc")
+				.limit(items)
+				.get();
+			const polls = pollsCollRef.docs;
+			return { polls };
+		}
+
+		const prevPollsCollRef = await firestore
 			.collection("polls")
+			.where(
+				property ? property : "createdAt",
+				property ? "==" : ">",
+				value ? value : 1
+			)
 			.orderBy("createdAt", "desc")
+			.limit(Number(page) === 1 ? items : (page - 1) * items)
 			.get();
-		const polls = pollsCollectionRef.docs;
-		return { polls };
+
+		const lastDocRef =
+			prevPollsCollRef.docs[prevPollsCollRef.docs.length - 1];
+
+		const pollsCollRef = await firestore
+			.collection("polls")
+			.where(
+				property ? property : "createdAt",
+				property ? "==" : ">",
+				value ? value : 1
+			)
+			.orderBy("createdAt", "desc")
+			.startAfter(lastDocRef)
+			.limit(items)
+			.get();
+
+		return { polls: pollsCollRef.docs };
 	} catch (error) {
+		console.log(error);
+
 		return {
-			error: error,
+			error: "error occured",
 		};
 	}
 };
@@ -279,16 +323,54 @@ export const searchPolls = async (value) => {
 	}
 };
 
-export const getVotedPolls = async (userID) => {
+export const getVotedPolls = async (page, items = 7, userID) => {
 	try {
-		const pollsCollectionRef = await firestore
+		if (Number(page) < 1) {
+			return {
+				error: "page not found",
+			};
+		}
+
+		if (Number(page) === 1) {
+			const pollsCollectionRef = await firestore
+				.collection("polls")
+				.where("votedBy", "array-contains", userID)
+				.orderBy("createdAt", "desc")
+				.get();
+			return { polls: pollsCollectionRef.docs };
+		}
+
+		const prevPollsCollRef = await firestore
 			.collection("polls")
 			.where("votedBy", "array-contains", userID)
+			.orderBy("createdAt", "desc")
+			.limit(Number(page) === 1 ? items : (page - 1) * items)
 			.get();
-		return { polls: pollsCollectionRef.docs };
+		const lastDocRef =
+			prevPollsCollRef.docs[prevPollsCollRef.docs.length - 1];
+
+		const pollsCollRef = await firestore
+			.collection("polls")
+			.where("votedBy", "array-contains", userID)
+			.orderBy("createdAt", "desc")
+			.startAfter(lastDocRef)
+			.limit(items)
+			.get();
+
+		return { polls: pollsCollRef.docs };
 	} catch (error) {
+		console.log(error);
+
 		return {
-			error: error,
+			error: error.message,
 		};
 	}
+};
+
+const validatePage = (pageNumber) => {
+	if (Number(pageNumber) < 0) {
+		throw new Error("page not found");
+	}
+
+	return true;
 };

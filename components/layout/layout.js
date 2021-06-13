@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
 					JSON.stringify(currentUserInfo)
 				);
 				dispatch(signUserIn());
-				router.push(`/${currentUserInfo.userID}`);
+				router.push(`/${currentUserInfo.userID}/1`);
 				// dispatch(setCurrentUser(currentUser));
 				dispatch(showNotification("you are signed in", true));
 			}

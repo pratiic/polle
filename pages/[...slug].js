@@ -9,17 +9,28 @@ import genericStyles from "../styles/generic.module.scss";
 import { setCurrentUserPolls } from "../redux/polls/polls.actions";
 import { showNotification } from "../redux/notification/notification.actions";
 
-import { getUserPolls, firestore } from "../firebase/firebase.utils";
-import { arrFromDocs } from "../components/utils/utils.results";
+import {
+	getUserPolls,
+	firestore,
+	getAllPolls,
+} from "../firebase/firebase.utils";
+import {
+	arrFromDocs,
+	validatePageNumber,
+} from "../components/utils/utils.results";
 import { getCurrentUser } from "../components/utils/utils.current-user";
 
 import PollsList from "../components/polls-list/polls-list";
 import CreatePoll from "../components/create-poll/create-poll";
 import PageHeader from "../components/page-header/page-header";
+import PaginationButtons from "../components/pagination-buttons/pagination-buttons";
+import React from "react";
 
 const UserPollsPage = ({ polls, error }) => {
 	const [pollsMessage, setPollsMessage] = useState("");
 	const [currentUser, setCurrentUser] = useState(getCurrentUser());
+	const [pageNumber, setPageNumber] = useState(1);
+	const [loading, setLoading] = useState(false);
 
 	const router = useRouter();
 
@@ -28,6 +39,10 @@ const UserPollsPage = ({ polls, error }) => {
 	// if (!currentUser) {
 	// 	dispatch(showNotification("you need to sign in", true));
 	// }
+
+	if (error) {
+		return <p className={genericStyles.message}>{error}</p>;
+	}
 
 	useEffect(() => {
 		if (!currentUser) {
@@ -60,6 +75,26 @@ const UserPollsPage = ({ polls, error }) => {
 	// 	}
 	// };
 
+	useEffect(() => {
+		setLoading(false);
+	}, [router]);
+
+	useEffect(() => {
+		setPageNumber(Number(router.query.slug[1]));
+	}, []);
+
+	const handlePreviousButtonClick = () => {
+		setLoading(true);
+		router.push(`/${currentUser.userID}/${pageNumber - 1}`);
+		setPageNumber(pageNumber - 1);
+	};
+
+	const handleNextButtonClick = () => {
+		setLoading(true);
+		router.push(`/${currentUser.userID}/${pageNumber + 1}`);
+		setPageNumber(pageNumber + 1);
+	};
+
 	return (
 		<div className={`${styles.mainPage} ${genericStyles.page}`}>
 			<Head>
@@ -75,7 +110,16 @@ const UserPollsPage = ({ polls, error }) => {
 				<CreatePoll />
 			</PageHeader>
 			{polls.length > 0 ? (
-				<PollsList polls={polls} />
+				<React.Fragment>
+					<PollsList polls={polls} />
+					<PaginationButtons
+						pageNumber={pageNumber}
+						loading={loading}
+						prevClickHandler={handlePreviousButtonClick}
+						nextClickHandler={handleNextButtonClick}
+						polls={polls}
+					/>
+				</React.Fragment>
 			) : (
 				<p className={`${genericStyles.message} ${styles.message}`}>
 					you have no polls
@@ -87,7 +131,30 @@ const UserPollsPage = ({ polls, error }) => {
 };
 
 export const getServerSideProps = async (context) => {
-	const result = await getUserPolls(context.params.userID);
+	const pageNumber = Number(context.params.slug[1]);
+
+	if (isNaN(Number(pageNumber)) || context.params.slug.length > 2) {
+		return {
+			props: {
+				error: "page not found",
+			},
+		};
+	}
+
+	const result = await getAllPolls(
+		context.params.slug[1],
+		7,
+		"createdByID",
+		context.params.slug[0]
+	);
+
+	if (result.polls && result.polls.length === 0 && pageNumber > 1) {
+		return {
+			props: {
+				error: "page not found",
+			},
+		};
+	}
 
 	return {
 		props: {

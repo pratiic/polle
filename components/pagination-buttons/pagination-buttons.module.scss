@@ -1,0 +1,17 @@
+@import "../../styles/variables.module.scss";
+
+.buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 3rem;
+}
+
+.gap {
+	margin: 0 0.75rem 0 0.75rem;
+}
+
+.message {
+	margin-top: 3rem;
+	color: $color-two;
+}
