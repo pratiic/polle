@@ -106,7 +106,7 @@ const UserPollsPage = ({ polls, error }) => {
 				<meta name="keywords" content="polls" />
 			</Head>
 
-			<PageHeader text="your polls">
+			<PageHeader text="your polls" extraStyles={styles.header}>
 				<CreatePoll />
 			</PageHeader>
 			{polls.length > 0 ? (

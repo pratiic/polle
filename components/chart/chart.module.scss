@@ -11,9 +11,29 @@
 
 .chart {
 	width: 100% !important;
+	height: 42rem !important;
+
+	@media screen and (max-width: 950px) {
+		height: 40rem !important;
+	}
+
+	@media screen and (max-width: 850px) {
+		height: 38rem !important;
+	}
+
+	@media screen and (max-width: 750px) {
+		height: 35rem !important;
+	}
+
+	@media screen and (max-width: 650px) {
+		height: 32rem !important;
+	}
+
+	@media screen and (max-width: 450px) {
+		height: 30rem !important;
+	}
 }
 
 .pie {
-	width: 50rem !important;
-	height: 50rem !important;
+	width: 100% !important;
 }

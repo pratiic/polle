@@ -5,8 +5,21 @@
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 2rem;
+
+	@media screen and (max-width: 1000px) {
+		justify-content: center;
+	}
+
+	@media screen and (max-width: 500px) {
+		flex-direction: column;
+
+		.pageHeader {
+			margin-bottom: 1rem;
+		}
+	}
 }
 
 .pageHeader {
 	margin-bottom: 0rem;
+	margin-right: 3rem;
 }

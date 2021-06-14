@@ -25,7 +25,7 @@ const PollSearch = ({ searchValue }) => {
 			return;
 		}
 
-		dispatch(setSearchValue(search));
+		dispatch(setSearchValue(search.toLowerCase()));
 		dispatch(setSearching(true));
 		router.push("/search");
 	};

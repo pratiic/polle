@@ -23,9 +23,7 @@ const Chart = ({ type, data, options, chartType }) => {
 		}
 
 		if (chartType === "pie") {
-			return (
-				<Pie data={data} options={options} className={styles.chart} />
-			);
+			return <Pie data={data} options={options} className={styles.pie} />;
 		}
 
 		if (chartType === "line") {

@@ -249,7 +249,7 @@ const PollCreator = () => {
 		}
 
 		return {
-			title: titleRef.current.value,
+			title: titleRef.current.value.toLowerCase(),
 			options: getPollOptions().map((pollOption) => pollOption.value),
 			duration: duration,
 			type: typeRef.current.value,
@@ -258,7 +258,7 @@ const PollCreator = () => {
 					? passwordRef.current.value
 					: "",
 			tags: tagsRef.current.value
-				? arrayFromString(tagsRef.current.value)
+				? arrayFromString(tagsRef.current.value.toLowerCase())
 				: [],
 			createdByID: currentUser.userID,
 			createdBy: currentUser,

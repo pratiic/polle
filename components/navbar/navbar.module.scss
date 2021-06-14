@@ -4,9 +4,45 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+	background-color: $color-three;
 
 	& > * {
 		margin-left: 3.5rem;
+	}
+
+	@media screen and (max-width: 850px) {
+		position: fixed;
+		top: 0;
+		right: 0;
+		height: 100%;
+		flex-direction: column;
+		justify-content: flex-start;
+		width: fit-content;
+		transform: translateX(107%);
+		transition: transform 150ms ease-in;
+		box-shadow: 0 0 0.35rem 0 rgba(0, 0, 0, 0.5);
+
+		& > * {
+			margin-left: 0rem;
+		}
+
+		.link {
+			padding: 1rem 9rem;
+			width: 100%;
+			border-bottom: 1px solid $color-four;
+
+			&:hover {
+				background-color: darken($color-three, 9%);
+			}
+		}
+
+		.active {
+			background-color: $color-four;
+
+			&::after {
+				display: none;
+			}
+		}
 	}
 }
 
@@ -38,6 +74,10 @@
 			background-color: $color-five;
 		}
 	}
+
+	@media screen and (max-width: 400px) {
+		padding: 1rem 7.5rem;
+	}
 }
 
 .active {
@@ -52,5 +92,36 @@
 		background-color: $color-one;
 		width: 75%;
 		height: 2px;
+	}
+}
+
+.profile {
+	display: none;
+
+	@media screen and (max-width: 850px) {
+		display: flex;
+	}
+}
+
+.navMenu {
+	margin-left: auto;
+	padding: 1.5rem;
+	box-sizing: content-box;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.show {
+	@media screen and (max-width: 850px) {
+		transform: translateX(0);
+	}
+}
+
+.signOutButton {
+	display: none;
+
+	@media screen and (max-width: 850px) {
+		display: block;
 	}
 }

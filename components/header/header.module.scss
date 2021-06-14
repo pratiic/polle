@@ -4,3 +4,27 @@
 	background-color: $color-three;
 	padding: 1rem 0rem;
 }
+
+.menu {
+	display: none;
+
+	path {
+		fill: $color-five;
+	}
+
+	&:hover {
+		path {
+			fill: $color-one;
+		}
+	}
+
+	&:active {
+		path {
+			fill: $color-five;
+		}
+	}
+
+	@media screen and (max-width: 850px) {
+		display: block;
+	}
+}

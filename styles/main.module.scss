@@ -5,19 +5,14 @@
 	margin-right: 1.5rem;
 }
 
-.header {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	margin-bottom: 3rem;
-
-	@media screen and (max-width: 1000px) {
-		justify-content: center;
-	}
-}
-
 .message {
 	@media screen and (max-width: 1000px) {
 		text-align: center;
+	}
+}
+
+.header {
+	@media screen and (max-width: 400px) {
+		flex-direction: column;
 	}
 }

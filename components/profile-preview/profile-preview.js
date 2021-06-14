@@ -16,7 +16,7 @@ import ChevronDownIcon from "../../assets/icons/chevron-down-icon";
 import DropdownMenu from "../dropdown-menu/dropdown-menu";
 import DropdownItem from "../dropdown-item/dropdown-item";
 
-const ProfilePreview = ({ username }) => {
+const ProfilePreview = ({ username, clickHandler }) => {
 	const [showDropdownMenu, setShowDropdownMenu] = useState(false);
 
 	const dispatch = useDispatch();
@@ -27,15 +27,6 @@ const ProfilePreview = ({ username }) => {
 		setShowDropdownMenu(!showDropdownMenu);
 	};
 
-	const handleSignOutItemClick = () => {
-		auth.signOut();
-		dispatch(setCurrentUserPolls([]));
-		removeCurrentUser();
-		router.push("/signin");
-		dispatch(signUserOut());
-		dispatch(showNotification("you are signed out", true));
-	};
-
 	return (
 		<div className={styles.profilePreview} onClick={toggleDropdownMenu}>
 			<p className={styles.username}>{username}</p>
@@ -44,7 +35,7 @@ const ProfilePreview = ({ username }) => {
 				extraStyles={styles.dropdownMenu}
 				show={showDropdownMenu}
 			>
-				<DropdownItem clickHandler={handleSignOutItemClick}>
+				<DropdownItem clickHandler={clickHandler}>
 					sign out
 				</DropdownItem>
 			</DropdownMenu>
