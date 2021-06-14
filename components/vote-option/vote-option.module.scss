@@ -47,6 +47,10 @@
 	&:hover {
 		background-color: $color-two;
 	}
+
+	@media screen and (max-width: 850px) {
+		padding: 0.5rem 1rem;
+	}
 }
 
 .selected {

@@ -3,6 +3,10 @@
 .search {
 	width: 25rem;
 
+	@media screen and (max-width: 500px) {
+		width: 32rem;
+	}
+
 	@media screen and (max-width: 400px) {
 		width: 100%;
 	}

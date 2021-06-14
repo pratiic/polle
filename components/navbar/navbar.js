@@ -106,7 +106,10 @@ const Navbar = ({ currentUser, show, toggleNavbar }) => {
 				);
 			})}
 
-			<span className={`${styles.link} ${styles.signOutButton}`}>
+			<span
+				className={`${styles.link} ${styles.signOutButton}`}
+				onClick={handleSignOutClick}
+			>
 				sign out
 			</span>
 			<ProfilePreview
