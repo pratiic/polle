@@ -7,7 +7,7 @@ const Notification = ({ show, text, success }) => {
 		<div
 			className={`${styles.notification} ${show && styles.show} ${
 				success && styles.success
-			}`}
+			} ${!success && styles.failure}`}
 		>
 			{text}
 		</div>

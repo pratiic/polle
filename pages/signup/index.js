@@ -64,6 +64,16 @@ const SignUpPage = () => {
 				return;
 		}
 
+		const maximumCharacterResult = checkMaximumCharacters();
+
+		switch (maximumCharacterResult.error) {
+			case "username":
+				setUsernameError(
+					"username cannot be greater than 20 characters long"
+				);
+				return;
+		}
+
 		const validEmail = validateEmail();
 
 		if (!validEmail) {
@@ -141,6 +151,14 @@ const SignUpPage = () => {
 
 		if (passwordRef.current.value.length < 7) {
 			return { error: "password" };
+		}
+
+		return { error: "" };
+	};
+
+	const checkMaximumCharacters = () => {
+		if (usernameRef.current.value.length > 20) {
+			return { error: "username" };
 		}
 
 		return { error: "" };

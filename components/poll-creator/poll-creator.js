@@ -146,7 +146,7 @@ const PollCreator = () => {
 			setCreating(false);
 
 			if (result.message === "created") {
-				router.push(`/${currentUser.userID}`);
+				router.push(`/${currentUser.userID}/1`);
 				// dispatch(addCurrentUserPoll(getPoll()));
 				dispatch(showNotification("poll created successfully", true));
 			}
@@ -180,6 +180,12 @@ const PollCreator = () => {
 		if (!option2Ref.current.value) {
 			// return { error: "option2" };
 			setOptionError("option2Error", "option two cannot be empty");
+			return false;
+		}
+
+		const optionsValidationResult = validateOptions();
+		if (optionsValidationResult.length > 0) {
+			dispatch(showNotification("options must not be same", false));
 			return false;
 		}
 
@@ -289,6 +295,22 @@ const PollCreator = () => {
 		return arr;
 	};
 
+	const validateOptions = () => {
+		const options = getPollOptions();
+		let sameOptions = [];
+
+		options.forEach((option) => {
+			if (
+				options.filter(
+					(optionInner) => optionInner.value === option.value
+				).length > 1
+			) {
+				sameOptions = [...sameOptions, option];
+			}
+		});
+		return sameOptions;
+	};
+
 	return (
 		<form
 			className={`${genericStyles.form} ${styles.form}`}
@@ -336,7 +358,11 @@ const PollCreator = () => {
 				</option>
 			</select>
 			{renderType()}
-			<CustomInput label="tags" type="text" inputRef={tagsRef} />
+			<CustomInput
+				label="tags (optional) (separate with commas)"
+				type="text"
+				inputRef={tagsRef}
+			/>
 			<div className={styles.gap}></div>
 			<Button color="blue" size="full">
 				{creating ? "creating" : "create"}
